@@ -63,6 +63,7 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
         lblCol = new javax.swing.JLabel();
         lblFileName = new javax.swing.JLabel();
         edtFileName = new javax.swing.JTextField();
+        btnColorConfig = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Boxcounting-Dimension berechnen");
@@ -108,6 +109,13 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
         lblFileName.setText("Dateiname:");
         lblFileName.setToolTipText("Ohne .png\\nBleibt der Dateiname leer, heißt die Datei heatmap oder random.");
 
+        btnColorConfig.setText("Farbgebung konfigurieren");
+        btnColorConfig.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnColorConfigActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -133,14 +141,17 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
                         .addComponent(barRow, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblSizes)
-                            .addComponent(lblFileName))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(edtSizes)
-                            .addComponent(edtFileName, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnResetSizes)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblSizes)
+                                    .addComponent(lblFileName))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(edtSizes)
+                                    .addComponent(edtFileName, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnResetSizes))
+                            .addComponent(btnColorConfig))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -156,7 +167,9 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblFileName)
                     .addComponent(edtFileName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnColorConfig)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnStart)
                     .addComponent(btnRandom))
@@ -221,6 +234,12 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
         savePNG(fileName);
         updateStepBar(barStep, bsmFinished);
     }//GEN-LAST:event_btnRandomActionPerformed
+
+    private void btnColorConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnColorConfigActionPerformed
+        ColorConfig dlgCC = new ColorConfig(this, true);
+        dlgCC.setup();
+        dlgCC.setVisible(true);
+    }//GEN-LAST:event_btnColorConfigActionPerformed
     
     private void processImages(){
         PNGProcess pp = new PNGProcess();
@@ -319,6 +338,7 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
     private javax.swing.JProgressBar barCol;
     private javax.swing.JProgressBar barRow;
     private javax.swing.JProgressBar barStep;
+    private javax.swing.JButton btnColorConfig;
     private javax.swing.JButton btnRandom;
     private javax.swing.JButton btnResetSizes;
     private javax.swing.JButton btnStart;

@@ -11,11 +11,15 @@ package boxcount;
  */
 
 import static boxcount.BoxCount.IMG_SIZE_PX;
+import static boxcount.BoxCount.colorLimits;
 import ij.IJ;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Toolkit;
+import static java.lang.Thread.sleep;
 import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import javax.swing.JTextField;
@@ -41,14 +45,14 @@ public class BCUtil {
     }
     
     static Color DimensionToColor(double _d){
-        if (_d < 1.001) return Color.WHITE;
-        if (_d < 1.125) return Color.BLUE;
-        if (_d < 1.25) return Color.CYAN;
-        if (_d < 1.375) return Color.GREEN;
-        if (_d < 1.5) return Color.YELLOW;
-        if (_d < 1.625) return Color.ORANGE;
-        if (_d < 1.75) return Color.RED;
-        if (_d < 1.875) return Color.MAGENTA;
+        if (_d < colorLimits[0]) return Color.WHITE;
+        if (_d < colorLimits[1]) return Color.BLUE;
+        if (_d < colorLimits[2]) return Color.CYAN;
+        if (_d < colorLimits[3]) return Color.GREEN;
+        if (_d < colorLimits[4]) return Color.YELLOW;
+        if (_d < colorLimits[5]) return Color.ORANGE;
+        if (_d < colorLimits[6]) return Color.RED;
+        if (_d < colorLimits[7]) return Color.MAGENTA;
         else return Color.PINK;
     }
     
@@ -80,6 +84,34 @@ public class BCUtil {
             }
         }
         return true;        
+    }
+    
+    static boolean checkColorLimits(Component _parent, JTextField[] _edits){
+        double[] arrD = new double[_edits.length];
+        for (int i = 0; i < _edits.length; i++){
+            try{
+                arrD[i] = Double.parseDouble(_edits[i].getText());
+            }
+            catch (NumberFormatException e){
+                zeigeFehler(_parent, "Eingabe kann nicht in einen Gleitkommawert übertragen werden!", "Ungültige Eingabe", true, _edits[i]);
+                return false;
+            }
+        }
+        
+        for (int i = 0; i < _edits.length; i++){
+            if ((arrD[i] < 1.0) || (arrD[i] > 2.0)){
+                zeigeFehler(_parent, "Eingabe liegt nicht zwischen 1 & 2!", "Nicht erlaubter Wert", true, _edits[i]);
+                return false;
+            }
+        }
+        
+        for (int i = 1; i < _edits.length; i++){
+            if (arrD[i] < arrD[i - 1]){
+                zeigeFehler(_parent, "Eingabe ist kleiner als vorheriges Feld", "Nicht erlaubter Wert", true, _edits[i]);
+                return false;
+            }
+        }
+        return true;
     }
     
     private static int[] StringToIntArray(String _s) throws NumberFormatException{
@@ -127,6 +159,15 @@ public class BCUtil {
     static void updateGridBar(JProgressBar _bar, int _value){
         _bar.setValue(_value);
         _bar.setString(_value + "/" + IMG_SIZE_PX);
+    }
+    
+    static void silentSleep(long millis){
+        try {
+            sleep(1000);
+        } 
+        catch (InterruptedException ex) {
+            Logger.getLogger(BCUtil.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
 
