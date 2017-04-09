@@ -1,1 +1,4 @@
-An die Oberfläche holen: Farbgebung: Farbwahl & Bereiche
+XML Export & Import
+An die Oberfläche holen:  Nomenklaturmuster der Quelldateien
+                          Bildgröße (nicht zwingend quadratisch?)
+                          Farbgebung: Farbwahl & Bereiche(done)
