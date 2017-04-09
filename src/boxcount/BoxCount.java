@@ -14,7 +14,7 @@ import java.awt.Color;
 public class BoxCount {
     
     static final int IMG_SIZE_PX = 512;
-    static String directory = "edges/";
+    static final String SOURCE_DIRECTORY = "edges/";
     static String fileName = "";
     static double[][] mapDimension = new double[IMG_SIZE_PX][IMG_SIZE_PX];
     static Color[][] aimBild = new Color[IMG_SIZE_PX][IMG_SIZE_PX];

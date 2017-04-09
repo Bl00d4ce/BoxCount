@@ -24,50 +24,47 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="lblPink" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  </Group>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="pnlExplanation" pref="0" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="pnlExplanation" pref="0" max="32767" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblWhite" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblBlue" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblCyan" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblGreen" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblYellow" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblOrange" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblRed" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblMagenta" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="edtRed" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="edtOrange" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="edtYellow" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="edtGreen" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="edtCyan" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="edtBlue" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="edtWhite" max="32767" attributes="0"/>
-                                  <Component id="edtMagenta" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="btnReset" pref="107" max="32767" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="btnAbort" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="btnOK" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="lblWhite" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblBlue" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblCyan" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblGreen" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblYellow" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblOrange" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblRed" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblMagenta" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblPink" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="edtRed" alignment="0" max="32767" attributes="0"/>
+                          <Component id="edtOrange" alignment="0" max="32767" attributes="0"/>
+                          <Component id="edtYellow" alignment="0" max="32767" attributes="0"/>
+                          <Component id="edtGreen" alignment="0" max="32767" attributes="0"/>
+                          <Component id="edtCyan" alignment="0" max="32767" attributes="0"/>
+                          <Component id="edtBlue" alignment="0" max="32767" attributes="0"/>
+                          <Component id="edtWhite" alignment="1" max="32767" attributes="0"/>
+                          <Component id="edtMagenta" alignment="1" max="32767" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                              <Component id="btnStandard" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Component id="btnReset" pref="107" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnAbort" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnOK" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -117,8 +114,11 @@
                   <Component id="lblMagenta" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="lblPink" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="22" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblPink" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnStandard" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="13" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnOK" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnAbort" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -274,6 +274,14 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="sonst Pink"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnStandard">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Standardwerte"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnStandardActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

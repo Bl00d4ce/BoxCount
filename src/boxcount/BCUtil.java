@@ -20,9 +20,11 @@ import static java.lang.Thread.sleep;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.management.monitor.Monitor;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import javax.swing.JTextField;
+import static java.lang.Thread.sleep;
 
 
 public class BCUtil {      
@@ -154,11 +156,13 @@ public class BCUtil {
                 break;
             }
         }
+        _bar.update(_bar.getGraphics());
     }
     
     static void updateGridBar(JProgressBar _bar, int _value){
         _bar.setValue(_value);
         _bar.setString(_value + "/" + IMG_SIZE_PX);
+        _bar.update(_bar.getGraphics());
     }
     
     static void silentSleep(long millis){

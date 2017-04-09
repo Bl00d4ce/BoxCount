@@ -8,6 +8,7 @@ package boxcount;
 import static boxcount.BCUtil.*;
 import static boxcount.BoxCount.*;
 import static boxcount.barStepMode.*;
+import java.awt.Cursor;
 import java.awt.image.BufferedImage;
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 import java.io.File;
@@ -212,11 +213,13 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
             fileName = "heatmap";
         }
         
+        setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         updateStepBar(barStep, bsmCalc);
         processImages();
         updateStepBar(barStep, bsmSave);
         savePNG(fileName);
         updateStepBar(barStep, bsmFinished);
+        setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
     }//GEN-LAST:event_btnStartActionPerformed
 
     private void btnRandomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRandomActionPerformed
@@ -228,11 +231,13 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
             fileName = "random";
         }
         
+        setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         updateStepBar(barStep, bsmCalc);
         processRandom();
         updateStepBar(barStep, bsmSave);
         savePNG(fileName);
         updateStepBar(barStep, bsmFinished);
+        setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
     }//GEN-LAST:event_btnRandomActionPerformed
 
     private void btnColorConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnColorConfigActionPerformed
@@ -246,7 +251,7 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
         double D;
         for (int x = 0; x < IMG_SIZE_PX; x++){
             for (int y = 0; y < IMG_SIZE_PX; y++){
-                updateGridBar(barCol, y);
+                updateGridBar(barCol, y); //Performanceintensiv, hier aber nicht so wichtig
                 pp.reset();
                 pp.setup(x, y);
                 D = pp.getDimension();
@@ -256,7 +261,7 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
             updateGridBar(barRow, x);
         }  
         updateGridBar(barCol, IMG_SIZE_PX);
-        updateGridBar(barRow, IMG_SIZE_PX);     
+        updateGridBar(barRow, IMG_SIZE_PX); 
     }
     
     private void savePNG(String _fileName){
@@ -265,12 +270,15 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
         BufferedImage im = new BufferedImage(IMG_SIZE_PX, IMG_SIZE_PX, TYPE_INT_RGB);
         for (int x = 0; x < IMG_SIZE_PX; x++){
             for (int y = 0; y < IMG_SIZE_PX; y++){
-                updateGridBar(barCol, y);
+                //updateGridBar(barCol, y); frisst zuviel Performance
                 int rgb = aimBild[x][y].getRGB();
                 im.setRGB(x, y, rgb);
             }
             updateGridBar(barRow, x);
         }
+        updateGridBar(barCol, IMG_SIZE_PX);
+        updateGridBar(barRow, IMG_SIZE_PX); 
+
         try {
             ImageIO.write(im, "PNG", fPNG);        
         }
@@ -278,8 +286,6 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
             Logger logger = Logger.getAnonymousLogger();
             logger.log(Level.SEVERE, "Datei " + fPNG.getPath() + " konnte nicht gespeichert werden!", e);
         }
-        updateGridBar(barCol, IMG_SIZE_PX);
-        updateGridBar(barRow, IMG_SIZE_PX); 
         zeigeNachricht(this, "Datei " + fileName + " wurde erzeugt!", "Fertig!", false, null);
     }
     
@@ -288,7 +294,9 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
         double rnd;
         for (int x = 0; x < IMG_SIZE_PX; x++){
             for (int y = 0; y < IMG_SIZE_PX; y++){
-                updateGridBar(barCol, y);
+                if (r.nextInt(1000) == 1){ //frisst zuviel Performance, aber da eh nur zu Testzwecken und zufallsbasiert gönn ich mir den Spaß (:
+                    updateGridBar(barCol, y);
+                }
                 rnd = r.nextDouble() + 1.0;
                 mapDimension[x][y] = rnd;
                 aimBild[x][y] = DimensionToColor(rnd);
@@ -296,7 +304,7 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
             updateGridBar(barRow, x);
         } 
         updateGridBar(barCol, IMG_SIZE_PX);
-        updateGridBar(barRow, IMG_SIZE_PX);     
+        updateGridBar(barRow, IMG_SIZE_PX);    
     }
     
     /**

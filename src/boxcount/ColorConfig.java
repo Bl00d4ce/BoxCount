@@ -5,6 +5,7 @@
  */
 package boxcount;
 
+import static boxcount.BoxCount.STD_COLOR_LIMITS;
 import static boxcount.BoxCount.colorLimits;
 import java.util.Arrays;
 import javax.swing.JTextField;
@@ -70,6 +71,7 @@ public class ColorConfig extends javax.swing.JDialog {
         lblRed = new javax.swing.JLabel();
         lblMagenta = new javax.swing.JLabel();
         lblPink = new javax.swing.JLabel();
+        btnStandard = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Farben konfigurieren");
@@ -147,46 +149,52 @@ public class ColorConfig extends javax.swing.JDialog {
 
         lblPink.setText("sonst Pink");
 
+        btnStandard.setText("Standardwerte");
+        btnStandard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStandardActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblPink)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(pnlExplanation, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(pnlExplanation, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblWhite)
-                                    .addComponent(lblBlue)
-                                    .addComponent(lblCyan)
-                                    .addComponent(lblGreen)
-                                    .addComponent(lblYellow)
-                                    .addComponent(lblOrange)
-                                    .addComponent(lblRed)
-                                    .addComponent(lblMagenta))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(edtRed, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(edtOrange, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(edtYellow, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(edtGreen, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(edtCyan, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(edtBlue, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(edtWhite)
-                                    .addComponent(edtMagenta)))
+                            .addComponent(lblWhite)
+                            .addComponent(lblBlue)
+                            .addComponent(lblCyan)
+                            .addComponent(lblGreen)
+                            .addComponent(lblYellow)
+                            .addComponent(lblOrange)
+                            .addComponent(lblRed)
+                            .addComponent(lblMagenta)
+                            .addComponent(lblPink))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(edtRed)
+                            .addComponent(edtOrange)
+                            .addComponent(edtYellow)
+                            .addComponent(edtGreen)
+                            .addComponent(edtCyan)
+                            .addComponent(edtBlue)
+                            .addComponent(edtWhite, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(edtMagenta, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(btnReset, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnAbort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnOK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap())))
+                                .addGap(8, 8, 8)
+                                .addComponent(btnStandard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnReset, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAbort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnOK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -226,8 +234,10 @@ public class ColorConfig extends javax.swing.JDialog {
                     .addComponent(edtMagenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblMagenta))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblPink)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblPink)
+                    .addComponent(btnStandard))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnOK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAbort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -258,6 +268,12 @@ public class ColorConfig extends javax.swing.JDialog {
             setVisible(false);
         }
     }//GEN-LAST:event_btnOKActionPerformed
+
+    private void btnStandardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStandardActionPerformed
+        for (int i = 0; i < arrEdits.length; i++){
+            arrEdits[i].setText(Double.toString(STD_COLOR_LIMITS[i]));
+        }
+    }//GEN-LAST:event_btnStandardActionPerformed
 
     /**
      * @param args the command line arguments
@@ -305,6 +321,7 @@ public class ColorConfig extends javax.swing.JDialog {
     private javax.swing.JButton btnAbort;
     private javax.swing.JButton btnOK;
     private javax.swing.JButton btnReset;
+    private javax.swing.JButton btnStandard;
     private javax.swing.JTextField edtBlue;
     private javax.swing.JTextField edtCyan;
     private javax.swing.JTextPane edtExplanation;
