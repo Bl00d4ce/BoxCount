@@ -11,6 +11,7 @@ import ij.plugin.filter.FractalBoxCounter;
 import ij.process.ImageProcessor;
 import ij.io.Opener;
 import static boxcount.BoxCount.SOURCE_DIRECTORY;
+import static boxcount.BoxCount.sourcePattern;
 
 /**
  *
@@ -35,7 +36,7 @@ public class PNGProcess {
     }
     
     void setup(int x, int y){
-        String filename = "9_" + x + "_" + y + ".png";
+        String filename = sourcePattern.replaceAll("\\{x\\}", Integer.toString(x)).replaceAll("\\{y\\}", Integer.toString(y));
         imp = opener.openImage(SOURCE_DIRECTORY, filename);
         fbc.setup("", imp);
         ip = imp.getProcessor();

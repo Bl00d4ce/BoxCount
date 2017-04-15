@@ -12,15 +12,12 @@ package boxcount;
 
 import static boxcount.BoxCount.IMG_SIZE_PX;
 import static boxcount.BoxCount.colorLimits;
-import ij.IJ;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Toolkit;
-import static java.lang.Thread.sleep;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.management.monitor.Monitor;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import javax.swing.JTextField;
@@ -28,7 +25,7 @@ import static java.lang.Thread.sleep;
 
 
 public class BCUtil {      
-    private static final String FILENAME_ALPHABET = "abcdefghijklmnopqrstuvwxyzäöüß _-ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜ0123456789";
+    private static final String FILENAME_ALPHABET = "abcdefghijklmnopqrstuvwxyzäöüß _-()[]{}ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜ0123456789";
     
     static void zeigeFehler(Component _parent, String _text, String _title, boolean _beep, Component _cmpFocus){
         zeigeDialog(_parent, _text, _title, JOptionPane.ERROR_MESSAGE, _beep, _cmpFocus); 
@@ -38,9 +35,19 @@ public class BCUtil {
         zeigeDialog(_parent, _text, _title, JOptionPane.PLAIN_MESSAGE, _beep, _cmpFocus); 
     }
     
+    static boolean zeigeJNDialog(Component _parent, String _text, String _title, boolean _beep, Component _cmpFocus){
+        if (_beep) Toolkit.getDefaultToolkit().beep();
+        int choice = JOptionPane.showConfirmDialog(_parent, _text, _title, JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+        if (choice == 2){
+            _cmpFocus.requestFocus();
+            return false;
+        }
+        return true;
+    }
+    
     private static void zeigeDialog(Component _parent, String _text, String _title, int _messageType, boolean _beep, Component _cmpFocus){
         if (_beep) Toolkit.getDefaultToolkit().beep();
-        JOptionPane.showMessageDialog(_parent, _text, _title, JOptionPane.PLAIN_MESSAGE); 
+        JOptionPane.showMessageDialog(_parent, _text, _title, _messageType); 
         if (_cmpFocus != null){
             _cmpFocus.requestFocus();
         }
@@ -76,14 +83,19 @@ public class BCUtil {
         return true;
     }
     
-    static boolean checkFileName(Component _parent, JTextField _edt){
+    static boolean checkFileName(Component _parent, JTextField _edt, boolean _bExtension){
         String name = _edt.getText().trim();
+        String alphabet = FILENAME_ALPHABET + (_bExtension ? "." : "");
         for (int i = 0; i < name.length(); i++){
             String c = Character.toString(name.charAt(i));
-            if (!FILENAME_ALPHABET.contains(c)){
+            if (!alphabet.contains(c)){
                 zeigeFehler(_parent, "Dateiname enthält ungültige Zeichen!", "Ungültiger Dateiname", true, _edt);
                 return false;
             }
+        }
+        if (_bExtension && (name.indexOf(".") != name.lastIndexOf("."))){
+            zeigeFehler(_parent, "Dateiname muss genau eine Endung enthalten", "Ungültiger Dateiname", true, _edt);
+            return false;
         }
         return true;        
     }
@@ -114,6 +126,21 @@ public class BCUtil {
             }
         }
         return true;
+    }
+    
+    static boolean checkFileNameForVariables(Component _parent, JTextField _edt){
+        String name = _edt.getText();
+        boolean bX = name.contains("{x}");
+        boolean bY = name.contains("{y}");
+        if (bX && bY){
+            return true;
+        }
+        String errMissingVar = "Folgende Variablen fehlen: " + 
+                (!bX ? "{x}" : "") +
+                ((!bX && !bY) ? ", " : "") +
+                (!bY ? "{y}" : "") + "\n" +
+                "Soll trotzdem fortgesetzt werden?";
+        return zeigeJNDialog(_parent, errMissingVar, "Fehlende Variablen", false, _edt);
     }
     
     private static int[] StringToIntArray(String _s) throws NumberFormatException{

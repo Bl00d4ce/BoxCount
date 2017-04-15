@@ -23,6 +23,8 @@ public class BoxCount {
     static String sizes = STD_SIZES;
     static final double[] STD_COLOR_LIMITS = {1.001, 1.125, 1.25, 1.375, 1.5, 1.625, 1.75, 1.875};
     static double[] colorLimits = STD_COLOR_LIMITS.clone();
+    static final String ORIG_SOURCE_PATTERN = "9_{x}_{y}.png";
+    static String sourcePattern = ORIG_SOURCE_PATTERN;
 
     /**
      * @param args the command line arguments
