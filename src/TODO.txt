@@ -1,4 +1,11 @@
-XML Export & Import
-An die Oberfläche holen:  Nomenklaturmuster der Quelldateien
+XML Export & Import - temporäre Lösung, muss überarbeitet werden
+An die Oberfläche holen:  Nomenklaturmuster der Quelldateien - DONE
+                            - Dateinamen nicht inkrementierend?
+                              -> Per Skript extern umbenennen; zuviele mögliche Stellen, um kleine nervige Fehler zu produzieren.
+                                  Das Programm muss nicht alle Aufgaben übernehmen.
+                                  Was wir außerhalb effizienter und schöner lösen können, lösen wir außerhalb.
+                                  Lieber ein Skript pro Datensatz, der nicht ganz passt, als ein neuer Programmmodus.
+                                  
                           Bildgröße (nicht zwingend quadratisch?)
-                          Farbgebung: Farbwahl & Bereiche(done)
+                          
+                          Farbgebung: Farbwahl & Bereiche - Bereiche DONE, Farben vorerst zurückgestellt
