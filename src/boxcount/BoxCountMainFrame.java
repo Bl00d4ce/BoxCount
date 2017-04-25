@@ -13,6 +13,12 @@ import java.awt.image.BufferedImage;
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -111,7 +117,7 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
         lblCol.setText("Aktuelle Spalte:");
 
         lblFileName.setText("Dateiname:");
-        lblFileName.setToolTipText("Ohne .png\\nBleibt der Dateiname leer, heißt die Datei heatmap oder random.");
+        lblFileName.setToolTipText("Ohne Dateiendung! Bleibt der Dateiname leer, heißen die Dateien 'heatmap' oder 'random'.");
 
         btnColorConfig.setText("Farbgebung konfigurieren");
         btnColorConfig.addActionListener(new java.awt.event.ActionListener() {
@@ -121,7 +127,7 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
         });
 
         lblSourcePattern.setText("Namensmuster Quelldateien:");
-        lblSourcePattern.setToolTipText("Mit Dateiendung!\\n{x} & {y} als Platzhalter für aktuelle Zeile/Spalte");
+        lblSourcePattern.setToolTipText("Mit Dateiendung! {x} & {y} als Platzhalter für aktuelle Zeile/Spalte");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -241,6 +247,7 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
         processImages();
         updateStepBar(barStep, bsmSave);
         savePNG(fileName);
+        saveDataDump(fileName);
         updateStepBar(barStep, bsmFinished);
         setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
     }//GEN-LAST:event_btnStartActionPerformed
@@ -259,6 +266,7 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
         processRandom();
         updateStepBar(barStep, bsmSave);
         savePNG(fileName);
+        saveDataDump(fileName);
         updateStepBar(barStep, bsmFinished);
         setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
     }//GEN-LAST:event_btnRandomActionPerformed
@@ -285,6 +293,27 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
         }  
         updateGridBar(barCol, IMG_SIZE_PX);
         updateGridBar(barRow, IMG_SIZE_PX); 
+    }
+    
+    private void saveDataDump(String _fileName){
+        String fileName = _fileName + ".dmp";
+        Path pDMP = Paths.get(fileName);  
+        List<String> saveLines = new ArrayList<>(); 
+        saveLines.add("Temporary File Dump");
+        saveLines.add(Integer.toString(mapDimension.length));       //x
+        saveLines.add(Integer.toString(mapDimension[0].length));    //y
+        for (int x = 0; x < mapDimension.length; x++){
+            for (int y = 0; y < mapDimension[x].length; y++){
+                saveLines.add(formatDimensionString(mapDimension[x][y]));
+            }
+        }
+        try{
+            Files.write(pDMP, saveLines, Charset.forName("UTF-8"));
+        }
+        catch (IOException e){
+            Logger logger = Logger.getAnonymousLogger();
+            logger.log(Level.SEVERE, "Datei " + fileName + " konnte nicht gespeichert werden!", e);
+        }
     }
     
     private void savePNG(String _fileName){

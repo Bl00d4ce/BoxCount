@@ -65,6 +65,10 @@ public class BCUtil {
         else return Color.PINK;
     }
     
+    static String formatDimensionString(double _d){
+        return String.format("%.4f", _d);
+    }
+    
     static boolean checkSizes(Component _parent, JTextField _edt){
         int[] arrSizes;
         try{

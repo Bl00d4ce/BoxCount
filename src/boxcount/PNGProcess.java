@@ -18,7 +18,7 @@ import static boxcount.BoxCount.sourcePattern;
  * @author Simon
  */
 public class PNGProcess {
-    private static Opener opener = new Opener();
+    private static final Opener FILE_OPENER = new Opener();
     
     private ImagePlus imp;
     private ImageProcessor ip;
@@ -37,7 +37,7 @@ public class PNGProcess {
     
     void setup(int x, int y){
         String filename = sourcePattern.replaceAll("\\{x\\}", Integer.toString(x)).replaceAll("\\{y\\}", Integer.toString(y));
-        imp = opener.openImage(SOURCE_DIRECTORY, filename);
+        imp = FILE_OPENER.openImage(SOURCE_DIRECTORY, filename);
         fbc.setup("", imp);
         ip = imp.getProcessor();
     }

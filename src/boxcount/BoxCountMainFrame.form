@@ -205,7 +205,7 @@
     <Component class="javax.swing.JLabel" name="lblFileName">
       <Properties>
         <Property name="text" type="java.lang.String" value="Dateiname:"/>
-        <Property name="toolTipText" type="java.lang.String" value="Ohne .png\u005cnBleibt der Dateiname leer, hei&#xdf;t die Datei heatmap oder random." containsInvalidXMLChars="true"/>
+        <Property name="toolTipText" type="java.lang.String" value="Ohne Dateiendung! Bleibt der Dateiname leer, hei&#xdf;en die Dateien &apos;heatmap&apos; oder &apos;random&apos;."/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="edtFileName">
@@ -223,7 +223,7 @@
     <Component class="javax.swing.JLabel" name="lblSourcePattern">
       <Properties>
         <Property name="text" type="java.lang.String" value="Namensmuster Quelldateien:"/>
-        <Property name="toolTipText" type="java.lang.String" value="Mit Dateiendung!\u005cn{x} &amp; {y} als Platzhalter f&#xfc;r aktuelle Zeile/Spalte" containsInvalidXMLChars="true"/>
+        <Property name="toolTipText" type="java.lang.String" value="Mit Dateiendung! {x} &amp; {y} als Platzhalter f&#xfc;r aktuelle Zeile/Spalte"/>
       </Properties>
     </Component>
   </SubComponents>
