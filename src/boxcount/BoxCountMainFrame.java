@@ -247,7 +247,7 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
         processImages();
         updateStepBar(barStep, bsmSave);
         savePNG(fileName);
-        saveDataDump(fileName);
+        saveXLS(fileName);
         updateStepBar(barStep, bsmFinished);
         setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
     }//GEN-LAST:event_btnStartActionPerformed
@@ -266,7 +266,7 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
         processRandom();
         updateStepBar(barStep, bsmSave);
         savePNG(fileName);
-        saveDataDump(fileName);
+        saveXLS(fileName);
         updateStepBar(barStep, bsmFinished);
         setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
     }//GEN-LAST:event_btnRandomActionPerformed
@@ -295,20 +295,27 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
         updateGridBar(barRow, IMG_SIZE_PX); 
     }
     
-    private void saveDataDump(String _fileName){
-        String fileName = _fileName + ".dmp";
-        Path pDMP = Paths.get(fileName);  
+    /*
+        Excel ist in der Lage, eine so formatierten Datei
+        (Tabulator zur Spaltentrennung; Zeilenumbruch zur Reihentrennung)
+        zu importieren.
+    */
+    private void saveXLS(String _fileName){
+        String fileName = _fileName + ".xls";
+        Path pXLS = Paths.get(fileName);  
         List<String> saveLines = new ArrayList<>(); 
-        saveLines.add("Temporary File Dump");
-        saveLines.add(Integer.toString(mapDimension.length));       //x
-        saveLines.add(Integer.toString(mapDimension[0].length));    //y
         for (int x = 0; x < mapDimension.length; x++){
+            StringBuilder sb = new StringBuilder();
             for (int y = 0; y < mapDimension[x].length; y++){
-                saveLines.add(formatDimensionString(mapDimension[x][y]));
+                if (y!=0){
+                    sb.append("\t");
+                }
+                sb.append(formatDimensionString(mapDimension[x][y]));
             }
+            saveLines.add(sb.toString());
         }
         try{
-            Files.write(pDMP, saveLines, Charset.forName("UTF-8"));
+            Files.write(pXLS, saveLines, Charset.forName("UTF-8"));
         }
         catch (IOException e){
             Logger logger = Logger.getAnonymousLogger();
