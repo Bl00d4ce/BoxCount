@@ -8,6 +8,7 @@ package boxcount;
 import static boxcount.BCUtil.*;
 import static boxcount.BoxCount.*;
 import static boxcount.barStepMode.*;
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.image.BufferedImage;
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;
@@ -40,9 +41,9 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
     void setup(){
         btnResetSizes.setToolTipText(STD_SIZES);
         btnResetSizesActionPerformed(null);
-        initProgressBar(barStep, 0, 2);
-        initProgressBar(barRow, 0, IMG_SIZE_PX);
-        initProgressBar(barCol, 0, IMG_SIZE_PX);
+        initProgressBar(barStep, 0, 3);
+        initProgressBar(barRow, 0, IMG_SIZE_PX_X);
+        initProgressBar(barCol, 0, IMG_SIZE_PX_Y);
         updateStepBar(barStep, bsmInactive);
         updateGridBar(barRow, 0);
         updateGridBar(barCol, 0);
@@ -74,6 +75,12 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
         btnColorConfig = new javax.swing.JButton();
         edtSourcePattern = new javax.swing.JTextField();
         lblSourcePattern = new javax.swing.JLabel();
+        chkUntergrenze = new javax.swing.JCheckBox();
+        lblSIZE_PX = new javax.swing.JLabel();
+        edtPX_X = new javax.swing.JTextField();
+        edtPX_Y = new javax.swing.JTextField();
+        lblMal = new javax.swing.JLabel();
+        lblPX = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Boxcounting-Dimension berechnen");
@@ -129,6 +136,19 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
         lblSourcePattern.setText("Namensmuster Quelldateien:");
         lblSourcePattern.setToolTipText("Mit Dateiendung! {x} & {y} als Platzhalter für aktuelle Zeile/Spalte");
 
+        chkUntergrenze.setSelected(true);
+        chkUntergrenze.setText("Werte kleiner 1 auf 1 setzen");
+
+        lblSIZE_PX.setText("Bildgröße:");
+
+        edtPX_X.setColumns(4);
+
+        edtPX_Y.setColumns(4);
+
+        lblMal.setText("x");
+
+        lblPX.setText("px");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -149,28 +169,37 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
                             .addComponent(barStep, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(barRow, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnColorConfig)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(chkUntergrenze))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnColorConfig)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblSourcePattern)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(edtSourcePattern, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addComponent(lblSizes)
-                                                .addGap(18, 18, 18))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(lblFileName)
-                                                .addGap(17, 17, 17)))
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(edtFileName, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
-                                            .addComponent(edtSizes))))
+                                .addComponent(lblSizes)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnResetSizes)))
-                        .addGap(0, 1, Short.MAX_VALUE)))
+                                .addComponent(edtSizes))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblFileName)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(edtFileName))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblSourcePattern)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                                .addComponent(edtSourcePattern, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblSIZE_PX)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(edtPX_X, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblMal)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(edtPX_Y, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblPX)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnResetSizes)
+                        .addGap(0, 18, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -190,7 +219,16 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
                     .addComponent(edtSourcePattern, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblSourcePattern))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnColorConfig)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblSIZE_PX)
+                    .addComponent(edtPX_X, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(edtPX_Y, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblMal)
+                    .addComponent(lblPX))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnColorConfig)
+                    .addComponent(chkUntergrenze))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
@@ -223,6 +261,9 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnResetSizesActionPerformed
 
     private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
+        if (!checkDims(this, edtPX_X, edtPX_Y)){
+            return;
+        }
         if (!checkSizes(this, edtSizes)){
             return;
         }
@@ -235,6 +276,12 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
         if (!checkFileNameForVariables(this, edtSourcePattern)){
             return;
         }
+        IMG_SIZE_PX_X = Integer.parseInt(edtPX_X.getText());
+        IMG_SIZE_PX_Y = Integer.parseInt(edtPX_Y.getText());
+        initProgressBar(barRow, 0, IMG_SIZE_PX_X);
+        initProgressBar(barCol, 0, IMG_SIZE_PX_Y);
+        mapDimension = new double[IMG_SIZE_PX_X][IMG_SIZE_PX_Y];
+        aimBild = new Color[IMG_SIZE_PX_X][IMG_SIZE_PX_Y];
         sizes = edtSizes.getText();
         fileName = edtFileName.getText();
         if (fileName.equals("")){
@@ -245,17 +292,27 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
         setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         updateStepBar(barStep, bsmCalc);
         processImages();
-        updateStepBar(barStep, bsmSave);
+        updateStepBar(barStep, bsmSavePNG);
         savePNG(fileName);
+        updateStepBar(barStep, bsmSaveXLS);
         saveXLS(fileName);
         updateStepBar(barStep, bsmFinished);
         setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
     }//GEN-LAST:event_btnStartActionPerformed
 
     private void btnRandomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRandomActionPerformed
+        if (!checkDims(this, edtPX_X, edtPX_Y)){
+            return;
+        }
         if (!checkFileName(this, edtFileName, false)){
             return;
         }  
+        IMG_SIZE_PX_X = Integer.parseInt(edtPX_X.getText());
+        IMG_SIZE_PX_Y = Integer.parseInt(edtPX_Y.getText());
+        initProgressBar(barRow, 0, IMG_SIZE_PX_X);
+        initProgressBar(barCol, 0, IMG_SIZE_PX_Y);
+        mapDimension = new double[IMG_SIZE_PX_X][IMG_SIZE_PX_Y];
+        aimBild = new Color[IMG_SIZE_PX_X][IMG_SIZE_PX_Y];
         fileName = edtFileName.getText();
         if (fileName.equals("")){
             fileName = "random";
@@ -264,8 +321,9 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
         setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         updateStepBar(barStep, bsmCalc);
         processRandom();
-        updateStepBar(barStep, bsmSave);
+        updateStepBar(barStep, bsmSavePNG);
         savePNG(fileName);
+        updateStepBar(barStep, bsmSaveXLS);
         saveXLS(fileName);
         updateStepBar(barStep, bsmFinished);
         setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
@@ -280,19 +338,22 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
     private void processImages(){
         PNGProcess pp = new PNGProcess();
         double D;
-        for (int x = 0; x < IMG_SIZE_PX; x++){
-            for (int y = 0; y < IMG_SIZE_PX; y++){
+        for (int x = 0; x < IMG_SIZE_PX_X; x++){
+            for (int y = 0; y < IMG_SIZE_PX_Y; y++){
                 updateGridBar(barCol, y); //Performanceintensiv, hier aber nicht so wichtig
                 pp.reset();
                 pp.setup(x, y);
                 D = pp.getDimension();
+                if (chkUntergrenze.isSelected() && (D < 1.0)){
+                    D = 1.0;
+                }
                 mapDimension[x][y] = D;
                 aimBild[x][y] = DimensionToColor(D);
             }
             updateGridBar(barRow, x);
         }  
-        updateGridBar(barCol, IMG_SIZE_PX);
-        updateGridBar(barRow, IMG_SIZE_PX); 
+        updateGridBar(barCol, IMG_SIZE_PX_X);
+        updateGridBar(barRow, IMG_SIZE_PX_Y); 
     }
     
     /*
@@ -321,22 +382,23 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
             Logger logger = Logger.getAnonymousLogger();
             logger.log(Level.SEVERE, "Datei " + fileName + " konnte nicht gespeichert werden!", e);
         }
+        zeigeNachricht(this, "Datei " + fileName + " wurde erzeugt!", "Fertig!", false, null);
     }
     
     private void savePNG(String _fileName){
         String fileName = _fileName + ".png";
         File fPNG = new File(fileName);
-        BufferedImage im = new BufferedImage(IMG_SIZE_PX, IMG_SIZE_PX, TYPE_INT_RGB);
-        for (int x = 0; x < IMG_SIZE_PX; x++){
-            for (int y = 0; y < IMG_SIZE_PX; y++){
+        BufferedImage im = new BufferedImage(IMG_SIZE_PX_X, IMG_SIZE_PX_Y, TYPE_INT_RGB);
+        for (int x = 0; x < IMG_SIZE_PX_X; x++){
+            for (int y = 0; y < IMG_SIZE_PX_Y; y++){
                 //updateGridBar(barCol, y); frisst zuviel Performance
                 int rgb = aimBild[x][y].getRGB();
                 im.setRGB(x, y, rgb);
             }
             updateGridBar(barRow, x);
         }
-        updateGridBar(barCol, IMG_SIZE_PX);
-        updateGridBar(barRow, IMG_SIZE_PX); 
+        updateGridBar(barCol, IMG_SIZE_PX_X);
+        updateGridBar(barRow, IMG_SIZE_PX_Y); 
 
         try {
             ImageIO.write(im, "PNG", fPNG);        
@@ -351,8 +413,8 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
     private void processRandom(){
         Random r = new Random();
         double rnd;
-        for (int x = 0; x < IMG_SIZE_PX; x++){
-            for (int y = 0; y < IMG_SIZE_PX; y++){
+        for (int x = 0; x < IMG_SIZE_PX_X; x++){
+            for (int y = 0; y < IMG_SIZE_PX_Y; y++){
                 if (r.nextInt(1000) == 1){ //frisst zuviel Performance, aber da eh nur zu Testzwecken und zufallsbasiert gönn ich mir den Spaß (:
                     updateGridBar(barCol, y);
                 }
@@ -362,8 +424,8 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
             }
             updateGridBar(barRow, x);
         } 
-        updateGridBar(barCol, IMG_SIZE_PX);
-        updateGridBar(barRow, IMG_SIZE_PX);    
+        updateGridBar(barCol, IMG_SIZE_PX_X);
+        updateGridBar(barRow, IMG_SIZE_PX_Y);    
     }
     
     /**
@@ -409,12 +471,18 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnRandom;
     private javax.swing.JButton btnResetSizes;
     private javax.swing.JButton btnStart;
+    private javax.swing.JCheckBox chkUntergrenze;
     private javax.swing.JTextField edtFileName;
+    private javax.swing.JTextField edtPX_X;
+    private javax.swing.JTextField edtPX_Y;
     private javax.swing.JTextField edtSizes;
     private javax.swing.JTextField edtSourcePattern;
     private javax.swing.JLabel lblCol;
     private javax.swing.JLabel lblFileName;
+    private javax.swing.JLabel lblMal;
+    private javax.swing.JLabel lblPX;
     private javax.swing.JLabel lblRow;
+    private javax.swing.JLabel lblSIZE_PX;
     private javax.swing.JLabel lblSizes;
     private javax.swing.JLabel lblSourcePattern;
     private javax.swing.JLabel lblStep;

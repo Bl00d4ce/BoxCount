@@ -10,7 +10,6 @@ package boxcount;
  * @author Simon
  */
 
-import static boxcount.BoxCount.IMG_SIZE_PX;
 import static boxcount.BoxCount.colorLimits;
 import java.awt.Color;
 import java.awt.Component;
@@ -21,6 +20,9 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import javax.swing.JTextField;
+import java.util.Locale;
+import static boxcount.BoxCount.IMG_SIZE_PX_X;
+import static boxcount.BoxCount.IMG_SIZE_PX_Y;
 import static java.lang.Thread.sleep;
 
 
@@ -66,8 +68,23 @@ public class BCUtil {
     }
     
     static String formatDimensionString(double _d){
-        return String.format("%.4f", _d);
+        return String.format(Locale.US, "%.4f", _d);
     }
+    
+    static boolean checkDims(Component _parent, JTextField _edtX, JTextField _edtY){
+        return checkDim(_parent, _edtX) && checkDim(_parent, _edtY);
+    }
+    
+    private static boolean checkDim(Component _parent, JTextField _edt){
+        try{
+            Integer.parseInt(_edt.getText());
+        }
+        catch (NumberFormatException e){
+            zeigeFehler(_parent, "Eingabe für Bildgröße kann nicht eingelesen werden!", "Ungültige Bildgröße", true, _edt);
+            return false;
+        }
+        return true;
+    } 
     
     static boolean checkSizes(Component _parent, JTextField _edt){
         int[] arrSizes;
@@ -176,13 +193,18 @@ public class BCUtil {
                 _bar.setString("Berechnet Dimensionen...");
                 break;
             }
-            case bsmSave: {
+            case bsmSavePNG: {
                 _bar.setValue(1);
                 _bar.setString("Erzeugt PNG...");
                 break;
             }
-            case bsmFinished: {
+            case bsmSaveXLS: {
                 _bar.setValue(2);
+                _bar.setString("Erzeugt XLS...");
+                break;
+            }
+            case bsmFinished: {
+                _bar.setValue(3);
                 _bar.setString("Fertig!");
                 break;
             }
@@ -192,7 +214,7 @@ public class BCUtil {
     
     static void updateGridBar(JProgressBar _bar, int _value){
         _bar.setValue(_value);
-        _bar.setString(_value + "/" + IMG_SIZE_PX);
+        _bar.setString(_value + "/" + _bar.getMaximum());
         _bar.update(_bar.getGraphics());
     }
     

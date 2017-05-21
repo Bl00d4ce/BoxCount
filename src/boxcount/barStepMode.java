@@ -10,5 +10,5 @@ package boxcount;
  * @author Simon
  */
 public enum barStepMode {
-    bsmInactive, bsmCalc, bsmSave, bsmFinished
+    bsmInactive, bsmCalc, bsmSavePNG, bsmSaveXLS, bsmFinished
 }

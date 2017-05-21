@@ -13,11 +13,12 @@ import java.awt.Color;
  */
 public class BoxCount {
     
-    static final int IMG_SIZE_PX = 512;
+    static int IMG_SIZE_PX_X = 512;
+    static int IMG_SIZE_PX_Y = 512;
     static final String SOURCE_DIRECTORY = "edges/";
     static String fileName = "";
-    static double[][] mapDimension = new double[IMG_SIZE_PX][IMG_SIZE_PX];
-    static Color[][] aimBild = new Color[IMG_SIZE_PX][IMG_SIZE_PX];
+    static double[][] mapDimension;
+    static Color[][] aimBild;
     
     static final String STD_SIZES = "2,4,6,8,16,32,64";
     static String sizes = STD_SIZES;
