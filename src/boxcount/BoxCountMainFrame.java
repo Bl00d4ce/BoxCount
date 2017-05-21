@@ -81,6 +81,7 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
         edtPX_Y = new javax.swing.JTextField();
         lblMal = new javax.swing.JLabel();
         lblPX = new javax.swing.JLabel();
+        chkXLSMatrix = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Boxcounting-Dimension berechnen");
@@ -149,6 +150,8 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
 
         lblPX.setText("px");
 
+        chkXLSMatrix.setText("XLS als Matrix");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -169,10 +172,6 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
                             .addComponent(barStep, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(barRow, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnColorConfig)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(chkUntergrenze))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblSizes)
@@ -184,8 +183,14 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
                                 .addComponent(edtFileName))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblSourcePattern)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
-                                .addComponent(edtSourcePattern, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(edtSourcePattern, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnResetSizes)
+                        .addGap(0, 14, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnColorConfig)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblSIZE_PX)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -195,11 +200,11 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(edtPX_Y, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblPX)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnResetSizes)
-                        .addGap(0, 18, Short.MAX_VALUE)))
+                                .addComponent(lblPX)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(chkXLSMatrix)
+                            .addComponent(chkUntergrenze))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -218,13 +223,14 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(edtSourcePattern, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblSourcePattern))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSIZE_PX)
                     .addComponent(edtPX_X, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(edtPX_Y, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblMal)
-                    .addComponent(lblPX))
+                    .addComponent(lblPX)
+                    .addComponent(chkXLSMatrix))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnColorConfig)
@@ -365,15 +371,24 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
         String fileName = _fileName + ".xls";
         Path pXLS = Paths.get(fileName);  
         List<String> saveLines = new ArrayList<>(); 
-        for (int x = 0; x < mapDimension.length; x++){
-            StringBuilder sb = new StringBuilder();
-            for (int y = 0; y < mapDimension[x].length; y++){
-                if (y!=0){
-                    sb.append("\t");
+        if (chkXLSMatrix.isSelected()){
+            for (int x = 0; x < mapDimension.length; x++){
+                StringBuilder sb = new StringBuilder();
+                for (int y = 0; y < mapDimension[x].length; y++){
+                    if (y!=0){
+                        sb.append("\t");
+                    }
+                    sb.append(formatDimensionString(mapDimension[x][y]));
                 }
-                sb.append(formatDimensionString(mapDimension[x][y]));
+                saveLines.add(sb.toString());
             }
-            saveLines.add(sb.toString());
+        }
+        else {
+            for (int x = 0; x < mapDimension.length; x++){
+                for (int y = 0; y < mapDimension[x].length; y++){
+                    saveLines.add(formatDimensionString(mapDimension[x][y]));
+                }
+            }            
         }
         try{
             Files.write(pXLS, saveLines, Charset.forName("UTF-8"));
@@ -472,6 +487,7 @@ public class BoxCountMainFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnResetSizes;
     private javax.swing.JButton btnStart;
     private javax.swing.JCheckBox chkUntergrenze;
+    private javax.swing.JCheckBox chkXLSMatrix;
     private javax.swing.JTextField edtFileName;
     private javax.swing.JTextField edtPX_X;
     private javax.swing.JTextField edtPX_Y;
